@@ -6,6 +6,9 @@
 import json
 import numpy as np
 from snippets import *
+
+from bert4keras.tokenizers import Tokenizer
+from bert4keras.models import build_transformer_model
 from bert4keras.backend import keras
 from bert4keras.snippets import sequence_padding, DataGenerator
 from bert4keras.snippets import open
@@ -17,6 +20,12 @@ maxlen = 128
 batch_size = 32
 epochs = 10
 
+# 建立分词器
+tokenizer = Tokenizer(dict_path, do_lower_case=True)
+# 预训练模型
+base = build_transformer_model(
+    config_path, checkpoint_path, application='unilm', return_keras_model=False
+)
 
 def load_data(filename):
     """加载数据
